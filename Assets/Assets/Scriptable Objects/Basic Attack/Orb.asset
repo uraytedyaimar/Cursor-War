@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1353971fbb230da4da3ab45c2f0f1978, type: 3}
+  m_Name: Orb
+  m_EditorClassIdentifier: 
+  abilityName: Orb
+  abilityIcon: {fileID: 21300000, guid: e77695e8fdd5f1747b396da3af1b3870, type: 3}
+  abilityPrefab: {fileID: 1355448493636745201, guid: 797a096b49eadc7479d6ba3a753aef7f, type: 3}
+  abilityType: 1
+  maxLevel: 5
+  levels:
+  - description: 1
+    damage: 10
+    cooldown: 1
+    destroyTimer: 2.5
+  - description: 2
+    damage: 20
+    cooldown: 0.9
+    destroyTimer: 2.5
+  - description: 3
+    damage: 30
+    cooldown: 0.8
+    destroyTimer: 2.5
+  - description: 4
+    damage: 40
+    cooldown: 0.7
+    destroyTimer: 2.5
+  - description: 5
+    damage: 50
+    cooldown: 0.5
+    destroyTimer: 2.5
