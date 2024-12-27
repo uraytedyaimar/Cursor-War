@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public static Enemy GetClosestEnemyInRange(Vector3 position) {
-        if (enemyList == null || enemyList.Count == 0) return null;
+        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
         Enemy closestEnemy = null;
         for (int i = 0; i < enemyList.Count; i++) {
             Enemy testEnemy = enemyList[i];
@@ -86,23 +86,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public static Enemy GetRandomEnemyInRange() {
-        if (enemyList == null || enemyList.Count == 0) return null;
-
-        foreach (Enemy enemy in enemyList) {
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
-
-            // Periksa apakah posisi musuh berada di dalam viewport
-            if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
-                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
-                viewportPosition.z > 0) {
-                enemyInRangeList.Add(enemy);
-            } else {
-                enemyInRangeList.Remove(enemy);
-            }
-        }
-
-        // Jika tidak ada musuh dalam kamera, kembalikan null
-        if (enemyInRangeList.Count == 0) return null;
+        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
 
         // Pilih musuh secara acak dari daftar musuh dalam kamera
         int randomIndex = UnityEngine.Random.Range(0, enemyInRangeList.Count);
@@ -130,6 +114,19 @@ public class Enemy : MonoBehaviour {
         } else {
             // Musuh mengejar target
             MoveTowardsTarget();
+        }
+
+        foreach (Enemy enemy in enemyList) {
+            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
+
+            // Periksa apakah posisi musuh berada di dalam viewport
+            if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                viewportPosition.z > 0) {
+                enemyInRangeList.Add(enemy);
+            } else {
+                enemyInRangeList.Remove(enemy);
+            }
         }
     }
 

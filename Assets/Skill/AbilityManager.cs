@@ -64,7 +64,6 @@ public class AbilityManager : MonoBehaviour
         }
 
         foreach (var ability in unlockedAbilities) {
-            // hanya activate ketika ada musuh dalam range camera
             if (Enemy.GetEnemyInRangeList().Count > 0) {
                 ability.Activate(transform);
             }
