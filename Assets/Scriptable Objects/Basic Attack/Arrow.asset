@@ -15,31 +15,23 @@ MonoBehaviour:
   abilityName: Arrow
   abilityIcon: {fileID: 21300000, guid: e77695e8fdd5f1747b396da3af1b3870, type: 3}
   abilityPrefab: {fileID: 7047069731611771310, guid: 9a3222f468a2d25469ed05c511635ced, type: 3}
-  abilityType: 1
-  maxLevel: 5
+  maxLevel: 3
   levels:
-  - description: Increase blabla
+  - description: 1. Increase amount, speed, effect, cooldown, and timer.
     prefabAmount: 1
+    speed: 5
     effectAmount: 10
     cooldown: 1
-    destroyTimer: 2.5
-  - description: 2
-    prefabAmount: 1
+    destroyTimer: 1
+  - description: 2. Increase amount, speed, effect, cooldown, and timer.
+    prefabAmount: 2
+    speed: 10
     effectAmount: 20
     cooldown: 0.9
-    destroyTimer: 2.5
-  - description: 3
-    prefabAmount: 1
+    destroyTimer: 2
+  - description: 3. Increase amount, speed, effect, cooldown, and timer.
+    prefabAmount: 3
+    speed: 15
     effectAmount: 30
-    cooldown: 0.8
-    destroyTimer: 2.5
-  - description: 4
-    prefabAmount: 1
-    effectAmount: 40
-    cooldown: 0.7
-    destroyTimer: 2.5
-  - description: 5
-    prefabAmount: 1
-    effectAmount: 50
     cooldown: 0.5
     destroyTimer: 2.5

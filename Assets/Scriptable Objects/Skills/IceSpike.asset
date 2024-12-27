@@ -15,20 +15,23 @@ MonoBehaviour:
   abilityName: Ice Spike
   abilityIcon: {fileID: 0}
   abilityPrefab: {fileID: 4890714146253852636, guid: eb359afbe3063314dbcfa96ca6e53ca5, type: 3}
-  maxLevel: 5
+  maxLevel: 3
   levels:
-  - description: 1
+  - description: 1. Increase amount, speed, effect, cooldown, and timer.
     prefabAmount: 1
+    speed: 5
     effectAmount: 10
     cooldown: 2.5
-    destroyTimer: 2.5
-  - description: 2
-    prefabAmount: 1
+    destroyTimer: 5
+  - description: 2. Increase amount, speed, effect, cooldown, and timer.
+    prefabAmount: 2
+    speed: 10
     effectAmount: 20
-    cooldown: 2.5
-    destroyTimer: 2.5
-  - description: 3
-    prefabAmount: 1
+    cooldown: 2
+    destroyTimer: 5
+  - description: 3. Increase amount, speed, effect, cooldown, and timer.
+    prefabAmount: 3
+    speed: 15
     effectAmount: 30
-    cooldown: 2.5
-    destroyTimer: 2.5
+    cooldown: 1
+    destroyTimer: 5

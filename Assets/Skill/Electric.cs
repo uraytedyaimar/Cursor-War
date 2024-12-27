@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantAbility : AbilityBase
+public class Electric : AbilityBase
 {
     // random enemy
-    // instant
-    // damage
+    // instant, timer
+    // high damage
 
     private Ability ability;
     private Ability.AbilityConfig abilityConfig;
+
+    private float timer;
+    private float timerMax = 0.1f;
 
     private void Start() {
         Destroy(gameObject, abilityConfig.destroyTimer);
@@ -19,9 +22,9 @@ public class InstantAbility : AbilityBase
         Enemy enemy = Enemy.GetRandomEnemyInRange();
         if (enemy != null) {
             GameObject prefab = Instantiate(ability.abilityPrefab, enemy.GetPosition(), Quaternion.identity);
-            InstantAbility instantAbility = prefab.GetComponent<InstantAbility>();
+            Electric electric = prefab.GetComponent<Electric>();
 
-            instantAbility.Setup(ability, abilityConfig);
+            electric.Setup(ability, abilityConfig);
         }
     }
 
@@ -30,10 +33,14 @@ public class InstantAbility : AbilityBase
         this.abilityConfig = abilityConfig;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        Enemy enemy = collision.GetComponent<Enemy>();
-        if (enemy != null) {
-            enemy.Damage(abilityConfig.effectAmount);
+    private void OnTriggerStay2D(Collider2D collision) {
+        timer += Time.deltaTime;
+        if (timer >= timerMax) {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy != null) {
+                enemy.Damage(abilityConfig.effectAmount);
+            }
+            timer = 0f;
         }
     }
 }

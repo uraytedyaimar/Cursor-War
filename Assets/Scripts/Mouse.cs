@@ -80,6 +80,10 @@ public class Mouse : MonoBehaviour
     private void HealthSystem_OnDead(object sender, EventArgs e) {
         // ubah cursor nya menjadi ikon tengkorak atau mati
         isDead = true;
+
+        healthSystem.OnHealthChanged -= HealthSystem_OnHealthChanged;
+        healthSystem.OnDamaged -= HealthSystem_OnDamaged;
+        healthSystem.OnDead -= HealthSystem_OnDead;
     }
 
     public void AddExperience(int amount) {

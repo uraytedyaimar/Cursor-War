@@ -562,9 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b663828bf4fd588478586c076d22708a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedAbilities:
-  - ability: {fileID: 11400000, guid: ea05efa09e8c36348956e13714844dc7, type: 2}
-    currentLevel: 1
+  unlockedAbilities: []
   lockedAbilities: []
 --- !u!114 &230431197
 MonoBehaviour:

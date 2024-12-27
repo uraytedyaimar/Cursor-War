@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAbility : AbilityBase
+public class Arrow : AbilityBase
 {
-    // closest enemy
-    // piercing
-    // damage
+    // random enemy
+    // piercing, timer
+    // low damage
 
     private Rigidbody2D rb;
 
     private Ability ability;
     private Ability.AbilityConfig abilityConfig;
 
-    private float speed = 15f;
+    private float speed;
     private Vector3 constantDirection;
 
     private void Awake() {
@@ -21,16 +21,17 @@ public class ProjectileAbility : AbilityBase
     }
 
     private void Start() {
+        speed = abilityConfig.speed;
         Destroy(gameObject, abilityConfig.destroyTimer);
     }
 
     public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
-        Enemy enemy = Enemy.GetClosestEnemyInRange(playerTransform.position);
+        Enemy enemy = Enemy.GetRandomEnemyInRange();
         if (enemy != null) {
             GameObject prefab = Instantiate(ability.abilityPrefab, playerTransform.position, Quaternion.identity);
-            ProjectileAbility projectileAbility = prefab.GetComponent<ProjectileAbility>();
+            Arrow arrow = prefab.GetComponent<Arrow>();
 
-            projectileAbility.Setup(enemy, ability, abilityConfig);
+            arrow.Setup(enemy, ability, abilityConfig);
         }
     }
 
@@ -51,6 +52,7 @@ public class ProjectileAbility : AbilityBase
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Damage(abilityConfig.effectAmount);
+            enemy.ApplyKnockback();
         }
     }
 }

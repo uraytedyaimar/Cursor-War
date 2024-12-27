@@ -12,8 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1353971fbb230da4da3ab45c2f0f1978, type: 3}
   m_Name: EldenRing
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Elden Ring
   abilityIcon: {fileID: 0}
-  abilityPrefab: {fileID: 0}
-  maxLevel: 5
-  levels: []
+  abilityPrefab: {fileID: 1095890399214762830, guid: 4f9280a1c51441649b9031ddc0efd6d3, type: 3}
+  maxLevel: 3
+  levels:
+  - description: 1. Increase effect, cooldown, and timer.
+    prefabAmount: 1
+    speed: 0
+    effectAmount: 1
+    cooldown: 2.5
+    destroyTimer: 1
+  - description: 2. Increase effect, cooldown, and timer.
+    prefabAmount: 1
+    speed: 0
+    effectAmount: 2
+    cooldown: 2
+    destroyTimer: 1.5
+  - description: 3. Increase effect, cooldown, and timer.
+    prefabAmount: 1
+    speed: 0
+    effectAmount: 3
+    cooldown: 1
+    destroyTimer: 1

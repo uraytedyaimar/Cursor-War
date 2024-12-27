@@ -8,13 +8,14 @@ public class Ability : ScriptableObject
     public string abilityName;
     public Sprite abilityIcon;
     public GameObject abilityPrefab;
-    public int maxLevel = 5;
+    public int maxLevel;
 
     public List<AbilityConfig> levels;
     [System.Serializable]
     public class AbilityConfig {
         public string description;
         public int prefabAmount;
+        public float speed;
         public float effectAmount;
         public float cooldown;
         public float destroyTimer;

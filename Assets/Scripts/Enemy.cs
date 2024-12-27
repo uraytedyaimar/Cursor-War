@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour {
     private float followingDelayMax;
 
     [SerializeField] private float knockbackStrength = 5f;
-    private float knockbackDuration = 0.2f;
+    [SerializeField] private float knockbackDuration = 0.2f;
     private bool isKnockedBack = false;
     private float knockbackTimer;
     private Vector2 knockbackDirection;
@@ -103,22 +103,6 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        // Cek apakah musuh sedang terkena knockback
-        if (isKnockedBack) {
-            knockbackTimer -= Time.deltaTime;
-            if (knockbackTimer <= 0) {
-                isKnockedBack = false; // Knockback selesai
-                rb.velocity = Vector2.zero;
-            }
-        } else {
-            // Musuh mengejar target
-            MoveTowardsTarget();
-        }
-
-        UpdateEnemiesInRange();
-    }
-
     private void UpdateEnemiesInRange() {
         enemyInRangeList.Clear();
 
@@ -138,37 +122,31 @@ public class Enemy : MonoBehaviour {
                 viewportPosition.z > 0;
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (isKnockedBack) {
-            // Terapkan knockback dengan menggunakan velocity
-            rb.velocity = knockbackDirection * knockbackStrength; // Gunakan velocity untuk knockback
-        } else {
-            // Jika tidak terkena knockback, pergerakan normal
-            Vector2 targetPosition = Vector2.MoveTowards(rb.position, target.transform.position, moveSpeed * Time.fixedDeltaTime);
-            rb.velocity = (targetPosition - rb.position).normalized * moveSpeed; // Menggunakan velocity untuk pergerakan normal
+            knockbackTimer -= Time.deltaTime;
+            if (knockbackTimer <= 0) {
+                isKnockedBack = false;
+                rb.velocity = Vector2.zero;
+            }
         }
     }
 
-    private void MoveTowardsTarget() {
-        float distanceToTarget = Vector2.Distance(transform.position, target.transform.position);
+    private void FixedUpdate() {
+        UpdateEnemiesInRange();
 
-        if (distanceToTarget < range) {
-            followingDelay = 0f;
-            shootTimer += Time.deltaTime;
-            if (shootTimer > shootTimerMax) {
-                shootTimer = 0f;
-                Attack();
-            }
+        if (isKnockedBack) {
+            rb.velocity = knockbackDirection * knockbackStrength;
         } else {
-            followingDelay += Time.deltaTime;
-            if (followingDelay > followingDelayMax) {
-                Vector2 targetPosition = Vector2.MoveTowards(rb.position, target.transform.position, moveSpeed * Time.fixedDeltaTime);
-                rb.MovePosition(targetPosition);
-            }
+            HandleMovement();
         }
+    }
 
-        Vector3 targetDir = target.transform.position - transform.position;
-        float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 135f;
+    private void HandleMovement() {
+        Vector3 targetPosition = target.transform.position - transform.position;
+        rb.velocity = targetPosition.normalized * moveSpeed;
+
+        float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg - 135f;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
@@ -182,6 +160,7 @@ public class Enemy : MonoBehaviour {
 
     private void Die() {
         enemyList.Remove(this);
+        enemyInRangeList.Remove(this);
         Destroy(gameObject);
         Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
         Instantiate(expPrefab, transform.position, Quaternion.identity);
@@ -208,11 +187,10 @@ public class Enemy : MonoBehaviour {
     }
 
     private void HealthSystem_OnDamaged(object sender, EventArgs e) {
-        ApplyKnockback();
         ApplySolidTint();
     }
 
-    private void ApplyKnockback() {
+    public void ApplyKnockback() {
         knockbackDirection = (transform.position - target.transform.position).normalized;
         knockbackTimer = knockbackDuration;
         isKnockedBack = true;

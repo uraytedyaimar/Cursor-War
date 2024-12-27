@@ -15,30 +15,23 @@ MonoBehaviour:
   abilityName: Slash
   abilityIcon: {fileID: 21300000, guid: e77695e8fdd5f1747b396da3af1b3870, type: 3}
   abilityPrefab: {fileID: 3750108487265549406, guid: 198611338ca7bcc4c8020f1995632e1d, type: 3}
-  maxLevel: 5
+  maxLevel: 3
   levels:
   - description: 1
     prefabAmount: 1
+    speed: 0
     effectAmount: 10
-    cooldown: 0.5
+    cooldown: 1
     destroyTimer: 0.5
   - description: 2
     prefabAmount: 1
+    speed: 0
     effectAmount: 20
-    cooldown: 0.5
+    cooldown: 0.75
     destroyTimer: 0.5
   - description: 3
     prefabAmount: 1
+    speed: 0
     effectAmount: 30
-    cooldown: 0.5
-    destroyTimer: 0.5
-  - description: 4
-    prefabAmount: 1
-    effectAmount: 40
-    cooldown: 0.5
-    destroyTimer: 0.5
-  - description: 5
-    prefabAmount: 1
-    effectAmount: 50
     cooldown: 0.5
     destroyTimer: 0.5

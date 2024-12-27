@@ -15,31 +15,23 @@ MonoBehaviour:
   abilityName: Electric
   abilityIcon: {fileID: 21300000, guid: e77695e8fdd5f1747b396da3af1b3870, type: 3}
   abilityPrefab: {fileID: 3024736291423816233, guid: 9246104e6f75de14e8a9fee19f0029bc, type: 3}
-  abilityType: 3
-  maxLevel: 5
+  maxLevel: 3
   levels:
-  - description: 1
+  - description: 1. Increase amount, effect, cooldown, and timer.
     prefabAmount: 1
-    effectAmount: 25
+    speed: 0
+    effectAmount: 10
     cooldown: 5
     destroyTimer: 1
-  - description: 2
-    prefabAmount: 1
-    effectAmount: 45
+  - description: 2. Increase amount, effect, cooldown, and timer.
+    prefabAmount: 2
+    speed: 0
+    effectAmount: 20
     cooldown: 4
     destroyTimer: 2
-  - description: 3
-    prefabAmount: 1
-    effectAmount: 65
+  - description: 3. Increase amount, effect, cooldown, and timer.
+    prefabAmount: 3
+    speed: 0
+    effectAmount: 30
     cooldown: 3
     destroyTimer: 3
-  - description: 4
-    prefabAmount: 1
-    effectAmount: 85
-    cooldown: 2
-    destroyTimer: 4
-  - description: 5
-    prefabAmount: 1
-    effectAmount: 100
-    cooldown: 1
-    destroyTimer: 5

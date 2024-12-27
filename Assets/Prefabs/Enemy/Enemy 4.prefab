@@ -167,6 +167,8 @@ MonoBehaviour:
   range: 7.5
   attackSpeed: 3.5
   moveSpeed: 3
+  knockbackStrength: 1
+  knockbackDuration: 0.2
 --- !u!114 &-6812761588100031826
 MonoBehaviour:
   m_ObjectHideFlags: 0

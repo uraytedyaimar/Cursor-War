@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAbility : AbilityBase
+public class Slash : AbilityBase
 {
     // closest enemy
     // piercing
-    // damage
+    // high damage
 
     private Ability ability;
     private Ability.AbilityConfig abilityConfig;
@@ -17,20 +17,22 @@ public class MeleeAbility : AbilityBase
 
     public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
         GameObject prefab = Instantiate(ability.abilityPrefab, playerTransform.position, Quaternion.identity);
-        MeleeAbility meleeAbility = prefab.GetComponent<MeleeAbility>();
+        Slash slash = prefab.GetComponent<Slash>();
 
-        meleeAbility.Setup(ability, abilityConfig);
+        slash.Setup(playerTransform, ability, abilityConfig);
     }
 
-    private void Setup(Ability ability, Ability.AbilityConfig abilityConfig) {
+    private void Setup(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
         this.ability = ability;
         this.abilityConfig = abilityConfig;
+        this.gameObject.transform.parent = playerTransform;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Damage(abilityConfig.effectAmount);
+            enemy.ApplyKnockback();
         }
     }
 }
