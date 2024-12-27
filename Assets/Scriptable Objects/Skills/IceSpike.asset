@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1353971fbb230da4da3ab45c2f0f1978, type: 3}
+  m_Name: IceSpike
+  m_EditorClassIdentifier: 
+  abilityName: Ice Spike
+  abilityIcon: {fileID: 0}
+  abilityPrefab: {fileID: 4890714146253852636, guid: eb359afbe3063314dbcfa96ca6e53ca5, type: 3}
+  maxLevel: 5
+  levels:
+  - description: 1
+    prefabAmount: 1
+    effectAmount: 10
+    cooldown: 2.5
+    destroyTimer: 2.5
+  - description: 2
+    prefabAmount: 1
+    effectAmount: 20
+    cooldown: 2.5
+    destroyTimer: 2.5
+  - description: 3
+    prefabAmount: 1
+    effectAmount: 30
+    cooldown: 2.5
+    destroyTimer: 2.5

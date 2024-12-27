@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OrbitAbility : MonoBehaviour
-{
+public class OrbitAbility : AbilityBase {
+    // player position
+    // orbit
+    // damage
+
     private Rigidbody2D rb;
     private Transform playerTransform;
+
+    private Ability ability;
+    private Ability.AbilityConfig abilityConfig;
 
     private float damage;
     private float angle;
@@ -60,5 +66,9 @@ public class OrbitAbility : MonoBehaviour
         if (enemy != null) {
             enemy.Damage(damage);
         }
+    }
+
+    public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
+        throw new System.NotImplementedException();
     }
 }

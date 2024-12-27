@@ -2,31 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantAbility : MonoBehaviour
+public class InstantAbility : AbilityBase
 {
-    private float damage;
-    private float destroyCooldown;
+    // random enemy
+    // instant
+    // damage
+
+    private Ability ability;
+    private Ability.AbilityConfig abilityConfig;
 
     private void Start() {
-        DestroySelf();
+        Destroy(gameObject, abilityConfig.destroyTimer);
     }
 
-    public static void Create(GameObject instantPrefab, Vector3 enemyPosition, float damage, float destroyCooldown) {
-        GameObject instant = Instantiate(instantPrefab, enemyPosition, Quaternion.identity);
-        InstantAbility instantAbility = instant.GetComponent<InstantAbility>();
+    public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
+        Enemy enemy = Enemy.GetRandomEnemyInRange();
+        if (enemy != null) {
+            GameObject prefab = Instantiate(ability.abilityPrefab, enemy.GetPosition(), Quaternion.identity);
+            InstantAbility instantAbility = prefab.GetComponent<InstantAbility>();
 
-        instantAbility.damage = damage;
-        instantAbility.destroyCooldown = destroyCooldown;
+            instantAbility.Setup(ability, abilityConfig);
+        }
     }
 
-    private void DestroySelf() {
-        Destroy(gameObject, destroyCooldown);
+    private void Setup(Ability ability, Ability.AbilityConfig abilityConfig) {
+        this.ability = ability;
+        this.abilityConfig = abilityConfig;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
-            enemy.Damage(damage);
+            enemy.Damage(abilityConfig.effectAmount);
         }
     }
 }

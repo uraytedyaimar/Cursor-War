@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour {
     private float followingDelay = 0f;
     private float followingDelayMax;
 
-    private float knockbackStrength = 5f;
+    [SerializeField] private float knockbackStrength = 5f;
     private float knockbackDuration = 0.2f;
     private bool isKnockedBack = false;
     private float knockbackTimer;
@@ -116,18 +116,26 @@ public class Enemy : MonoBehaviour {
             MoveTowardsTarget();
         }
 
-        foreach (Enemy enemy in enemyList) {
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
+        UpdateEnemiesInRange();
+    }
 
-            // Periksa apakah posisi musuh berada di dalam viewport
-            if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
-                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
-                viewportPosition.z > 0) {
+    private void UpdateEnemiesInRange() {
+        enemyInRangeList.Clear();
+
+        foreach (Enemy enemy in enemyList) {
+            Vector3 enemyPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
+            if (IsInRange(enemyPosition)) {
                 enemyInRangeList.Add(enemy);
             } else {
                 enemyInRangeList.Remove(enemy);
             }
         }
+    }
+
+    private bool IsInRange(Vector3 viewportPosition) {
+        return viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                viewportPosition.z > 0;
     }
 
     private void FixedUpdate() {

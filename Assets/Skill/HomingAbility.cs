@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingAbility : MonoBehaviour
-{
+public class HomingAbility : AbilityBase {
+    // closest enemy
+    // targeting
+    // damage
+
     private Rigidbody2D rb;
+
+    private Ability ability;
+    private Ability.AbilityConfig abilityConfig;
 
     private float damage;
     private float speed = 15f;
@@ -52,6 +58,10 @@ public class HomingAbility : MonoBehaviour
         if (enemy != null) {
             enemy.Damage(damage);
         }
+    }
+
+    public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
+        throw new System.NotImplementedException();
     }
 
     /*
