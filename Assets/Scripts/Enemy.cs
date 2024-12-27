@@ -63,10 +63,10 @@ public class Enemy : MonoBehaviour {
     public static Enemy GetClosestEnemyInRange(Vector3 position) {
         if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
         Enemy closestEnemy = null;
-        for (int i = 0; i < enemyList.Count; i++) {
-            Enemy testEnemy = enemyList[i];
+        for (int i = 0; i < enemyInRangeList.Count; i++) {
+            Enemy testEnemy = enemyInRangeList[i];
 
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemyList[i].GetPosition());
+            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemyInRangeList[i].GetPosition());
             // Periksa apakah posisi musuh berada di dalam viewport
             if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
                 viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
@@ -200,18 +200,16 @@ public class Enemy : MonoBehaviour {
     }
 
     private void HealthSystem_OnDamaged(object sender, EventArgs e) {
-        ApplyKnockback();  // Terapkan knockback ketika musuh menerima damage
+        ApplyKnockback();
         ApplySolidTint();
     }
 
     private void ApplyKnockback() {
-        // Menghitung arah knockback (musuh terdorong menjauh dari target)
         knockbackDirection = (transform.position - target.transform.position).normalized;
         knockbackTimer = knockbackDuration;
         isKnockedBack = true;
 
-        // Hentikan pergerakan biasa sementara dan terapkan knockback dengan velocity
-        rb.velocity = Vector2.zero; // Pastikan tidak ada kecepatan yang tersisa sebelum knockback
+        rb.velocity = Vector2.zero;
     }
 
     private void ApplySolidTint() {
