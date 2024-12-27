@@ -52,7 +52,8 @@ public class Orb : AbilityBase
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Damage(abilityConfig.effectAmount);
-            enemy.ApplyKnockback();
+            enemy.ApplySolidTint(new Color(0, 1, 0, 1));
+            enemy.ApplyKnockback(transform.position);
             Destroy(gameObject);
         }
     }

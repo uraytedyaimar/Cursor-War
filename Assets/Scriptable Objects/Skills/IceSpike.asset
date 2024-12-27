@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Ice Spike
   abilityIcon: {fileID: 0}
-  abilityPrefab: {fileID: 4890714146253852636, guid: eb359afbe3063314dbcfa96ca6e53ca5, type: 3}
+  abilityPrefab: {fileID: 9084618235678032576, guid: ba6e1b31209ce6949b224584341abc28, type: 3}
   maxLevel: 3
   levels:
   - description: 1. Increase amount, speed, effect, cooldown, and timer.

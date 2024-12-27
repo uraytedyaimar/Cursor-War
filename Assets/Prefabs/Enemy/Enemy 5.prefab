@@ -161,7 +161,6 @@ MonoBehaviour:
   attackPosition: {fileID: 432565092569804591}
   expPrefab: {fileID: 1459593546001740463, guid: 672b313bc53b5ab4d91cff02f9575d09, type: 3}
   deadParticlePrefab: {fileID: 271413199329854369, guid: 494512113e4b27342b8fedd5722898a3, type: 3}
-  hp: 0
   maxHp: 250
   damage: 50
   range: 9
@@ -169,6 +168,7 @@ MonoBehaviour:
   moveSpeed: 1.5
   knockbackStrength: 0
   knockbackDuration: 0.2
+  isBos: 1
 --- !u!114 &-7716281679491195604
 MonoBehaviour:
   m_ObjectHideFlags: 0

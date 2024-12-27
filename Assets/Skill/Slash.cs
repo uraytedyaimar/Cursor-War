@@ -32,7 +32,8 @@ public class Slash : AbilityBase
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Damage(abilityConfig.effectAmount);
-            enemy.ApplyKnockback();
+            enemy.ApplySolidTint(new Color(1, 0, 0, 1));
+            enemy.ApplyKnockback(transform.position);
         }
     }
 }

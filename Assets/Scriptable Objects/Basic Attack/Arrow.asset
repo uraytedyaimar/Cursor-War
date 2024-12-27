@@ -22,16 +22,16 @@ MonoBehaviour:
     speed: 5
     effectAmount: 10
     cooldown: 1
-    destroyTimer: 1
+    destroyTimer: 5
   - description: 2. Increase amount, speed, effect, cooldown, and timer.
     prefabAmount: 2
     speed: 10
     effectAmount: 20
     cooldown: 0.9
-    destroyTimer: 2
+    destroyTimer: 7.5
   - description: 3. Increase amount, speed, effect, cooldown, and timer.
     prefabAmount: 3
     speed: 15
     effectAmount: 30
     cooldown: 0.5
-    destroyTimer: 2.5
+    destroyTimer: 10

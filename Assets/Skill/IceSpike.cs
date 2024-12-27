@@ -52,7 +52,8 @@ public class IceSpike : AbilityBase
         Enemy enemy = collision.GetComponent<Enemy>();
         if (enemy != null) {
             enemy.Damage(abilityConfig.effectAmount);
-            enemy.ApplyKnockback();
+            enemy.ApplySlowDebuff();
+            enemy.ApplyKnockback(transform.position);
             Destroy(gameObject);
             // tambahkan slow debuff
         }

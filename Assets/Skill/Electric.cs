@@ -12,7 +12,7 @@ public class Electric : AbilityBase
     private Ability.AbilityConfig abilityConfig;
 
     private float timer;
-    private float timerMax = 0.1f;
+    private float timerMax = 0.25f;
 
     private void Start() {
         Destroy(gameObject, abilityConfig.destroyTimer);
@@ -39,6 +39,8 @@ public class Electric : AbilityBase
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null) {
                 enemy.Damage(abilityConfig.effectAmount);
+                enemy.ApplySolidTint(new Color(1, 1, 0, 1));
+                enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
             timer = 0f;
         }

@@ -37,6 +37,7 @@ public class EldenRing : AbilityBase
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null) {
                 enemy.Damage(abilityConfig.effectAmount);
+                enemy.ApplySolidTint(new Color(1, 0, 0, 1));
             }
             timer = 0f;
         }
