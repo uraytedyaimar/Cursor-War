@@ -11,20 +11,33 @@ public class Electric : AbilityBase
     private Ability ability;
     private Ability.AbilityConfig abilityConfig;
 
-    private float timer;
-    private float timerMax = 0.25f;
+    private bool readyToDamage;
+    private float readyToDamageTimer;
+    private float readyToDamageTimerMax = 0.1f;
 
     private void Start() {
         Destroy(gameObject, abilityConfig.destroyTimer);
     }
 
-    public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
-        Enemy enemy = Enemy.GetRandomEnemyInRange();
-        if (enemy != null) {
-            GameObject prefab = Instantiate(ability.abilityPrefab, enemy.GetPosition(), Quaternion.identity);
-            Electric electric = prefab.GetComponent<Electric>();
+    private void Update() {
+        if (!readyToDamage) {
+            readyToDamageTimer += Time.deltaTime;
+            if (readyToDamageTimer >= readyToDamageTimerMax) {
+                readyToDamage = true;
+                readyToDamageTimer = 0f;
+            }
+        }
+    }
 
-            electric.Setup(ability, abilityConfig);
+    public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
+        for (int i = 0; i < abilityConfig.prefabAmount; i++) {
+            Enemy enemy = Enemy.GetRandomEnemyInRange();
+            if (enemy != null) {
+                GameObject prefab = Instantiate(ability.abilityPrefab, enemy.GetPosition(), Quaternion.identity);
+                Electric electric = prefab.GetComponent<Electric>();
+
+                electric.Setup(ability, abilityConfig);
+            }
         }
     }
 
@@ -34,15 +47,15 @@ public class Electric : AbilityBase
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
-        timer += Time.deltaTime;
-        if (timer >= timerMax) {
+        if (readyToDamage) {
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null) {
                 enemy.Damage(abilityConfig.effectAmount);
                 enemy.ApplySolidTint(new Color(1, 1, 0, 1));
                 enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+
+                readyToDamage = false;
             }
-            timer = 0f;
         }
     }
 }

@@ -25,14 +25,10 @@ public class Enemy : MonoBehaviour
     private float hp;
     private float originalMoveSpeed;
 
-    // Shoot
-    private float shootTimer;
-    private float shootTimerMax = 1f;
-
     // Knockback
     [Header("Knockback")]
-    [SerializeField] private float knockbackStrength = 5f;
-    [SerializeField] private float knockbackDuration = 0.2f;
+    [SerializeField] private float knockbackStrength;
+    [SerializeField] private float knockbackDuration;
     private bool isKnockedBack;
     private float knockbackTimer;
     private Vector2 knockbackDirection;
@@ -55,49 +51,7 @@ public class Enemy : MonoBehaviour
 
         enemyList.Add(this);
         hp = maxHp;
-        shootTimer = shootTimerMax;
     }
-
-    private static List<Enemy> enemyList = new List<Enemy>();
-    private static List<Enemy> enemyInRangeList = new List<Enemy>();
-    private List<Enemy> GetEnemyList() {
-        return enemyList;
-    }
-
-    public static List<Enemy> GetEnemyInRangeList() {
-        return enemyInRangeList;
-    }
-
-    public static Enemy GetClosestEnemyInRange(Vector3 position) {
-        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
-        Enemy closestEnemy = null;
-        for (int i = 0; i < enemyInRangeList.Count; i++) {
-            Enemy testEnemy = enemyInRangeList[i];
-
-            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemyInRangeList[i].GetPosition());
-            // Periksa apakah posisi musuh berada di dalam viewport
-            if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
-                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
-                viewportPosition.z > 0) {
-
-                if (closestEnemy == null) {
-                    closestEnemy = testEnemy;
-                } else {
-                    if (Vector3.Distance(position, testEnemy.GetPosition()) < Vector3.Distance(position, closestEnemy.GetPosition())) {
-                        closestEnemy = testEnemy;
-                    }
-                }
-            }
-        }
-        return closestEnemy;
-    }
-
-    public static Enemy GetRandomEnemyInRange() {
-        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
-        int randomIndex = UnityEngine.Random.Range(0, enemyInRangeList.Count);
-        return enemyInRangeList[randomIndex];
-    }
-
 
     private void Start() {
         if (Mouse.Instance != null) {
@@ -108,23 +62,6 @@ public class Enemy : MonoBehaviour
 
         originalMoveSpeed = moveSpeed;
         slowSpeed = moveSpeed / 2;
-    }
-
-    private void UpdateEnemiesInRange() {
-        enemyInRangeList.Clear();
-
-        foreach (Enemy enemy in enemyList) {
-            Vector3 enemyPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
-            if (IsInRange(enemyPosition)) {
-                enemyInRangeList.Add(enemy);
-            }
-        }
-    }
-
-    private bool IsInRange(Vector3 viewportPosition) {
-        return viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
-                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
-                viewportPosition.z > 0;
     }
 
     private void Update() {
@@ -159,6 +96,58 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // Enemy List
+    private static List<Enemy> enemyList = new List<Enemy>();
+    private static List<Enemy> enemyInRangeList = new List<Enemy>();
+    private List<Enemy> GetEnemyList() {
+        return enemyList;
+    }
+    public static List<Enemy> GetEnemyInRangeList() {
+        return enemyInRangeList;
+    }
+    public static Enemy GetClosestEnemyInRange(Vector3 position) {
+        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
+        Enemy closestEnemy = null;
+        for (int i = 0; i < enemyInRangeList.Count; i++) {
+            Enemy testEnemy = enemyInRangeList[i];
+
+            Vector3 viewportPosition = Camera.main.WorldToViewportPoint(enemyInRangeList[i].GetPosition());
+            if (viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                viewportPosition.z > 0) {
+
+                if (closestEnemy == null) {
+                    closestEnemy = testEnemy;
+                } else {
+                    if (Vector3.Distance(position, testEnemy.GetPosition()) < Vector3.Distance(position, closestEnemy.GetPosition())) {
+                        closestEnemy = testEnemy;
+                    }
+                }
+            }
+        }
+        return closestEnemy;
+    }
+    public static Enemy GetRandomEnemyInRange() {
+        if (enemyInRangeList == null || enemyInRangeList.Count == 0) return null;
+        int randomIndex = UnityEngine.Random.Range(0, enemyInRangeList.Count);
+        return enemyInRangeList[randomIndex];
+    }
+    private void UpdateEnemiesInRange() {
+        enemyInRangeList.Clear();
+
+        foreach (Enemy enemy in enemyList) {
+            Vector3 enemyPosition = Camera.main.WorldToViewportPoint(enemy.GetPosition());
+            if (IsInRange(enemyPosition)) {
+                enemyInRangeList.Add(enemy);
+            }
+        }
+    }
+    private bool IsInRange(Vector3 viewportPosition) {
+        return viewportPosition.x >= 0 && viewportPosition.x <= 1 &&
+                viewportPosition.y >= 0 && viewportPosition.y <= 1 &&
+                viewportPosition.z > 0;
+    }
+
     // Basic
     private void HandleMovement() {
         Vector3 targetPosition = target.transform.position - transform.position;
@@ -166,9 +155,6 @@ public class Enemy : MonoBehaviour
 
         float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg - 135f;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-    }
-    private void Attack() {
-        EnemyProjectile.Create(attackPosition.position, target.transform.position, attackSpeed, damage);
     }
     public void Damage(float damage) {
         healthSystem.Damage(damage);
@@ -217,9 +203,22 @@ public class Enemy : MonoBehaviour
         Instantiate(deadParticlePrefab, transform.position, Quaternion.identity);
         Instantiate(expPrefab, transform.position, Quaternion.identity);
 
+    }   
+    private void OnDestroy() {
+        enemyList.Remove(this);
+        enemyInRangeList.Remove(this);
+
+        healthSystem.OnHealthChanged -= HealthSystem_OnHealthChanged;
+        healthSystem.OnDead -= HealthSystem_OnDead;
     }
 
     // Testing
+    private void OnTriggerEnter2D(Collider2D collision) {
+        Mouse mouse = collision.GetComponent<Mouse>();
+        if (mouse != null) {
+            mouse.Damage(damage);
+        }
+    }
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, range);

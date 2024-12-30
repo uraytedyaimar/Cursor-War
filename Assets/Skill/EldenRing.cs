@@ -8,17 +8,32 @@ public class EldenRing : AbilityBase
     // orbit, timer
     // low damage + burn debuff
 
+    public static EldenRing Instance { get; private set; }
+
     private Ability ability;
     private Ability.AbilityConfig abilityConfig;
 
     private float timer;
-    private float timerMax = 0.1f;
+    private float timerMax = 0.15f;
+
+    private void Awake() {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     private void Start() {
-        Destroy(gameObject, abilityConfig.destroyTimer);
+        if (abilityConfig.destroyTimer > 0) {
+            Destroy(gameObject, abilityConfig.destroyTimer);
+        }
     }
 
     public override void Create(Transform playerTransform, Ability ability, Ability.AbilityConfig abilityConfig) {
+        if (Instance != null) return;
+
         GameObject prefab = Instantiate(ability.abilityPrefab, playerTransform.position, Quaternion.identity);
         EldenRing eldenRing = prefab.GetComponent<EldenRing>();
 

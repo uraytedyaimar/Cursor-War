@@ -29,15 +29,15 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case State.GameOver:
-                audioSource.enabled = false;
-                AudioSource.PlayClipAtPoint(deathClip, Camera.main.transform.position, 0.025f);
+                // audioSource.enabled = false;
+                // AudioSource.PlayClipAtPoint(deathClip, Camera.main.transform.position, 0.025f);
                 StartCoroutine(GameOver());
                 break;
         }
     }
 
     private IEnumerator GameOver() {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
         enemyManager.SetActive(false);
         gameOverUI.SetActive(true);

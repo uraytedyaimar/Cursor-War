@@ -33,5 +33,5 @@ MonoBehaviour:
     prefabAmount: 3
     speed: 0
     effectAmount: 30
-    cooldown: 3
-    destroyTimer: 3
+    cooldown: 2.5
+    destroyTimer: 2.5
